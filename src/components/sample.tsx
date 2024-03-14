@@ -2,6 +2,8 @@ import type { isRenderInstruction } from "astro/runtime/server/render/instructio
 import wordList from "./wordList"
 import { useState } from "react";
 
+
+
 export default function Sample() {
     const words = wordList();
     let scrabbleWords = words.split(" ").filter(word => word.length === 5).join("\n");
@@ -28,6 +30,7 @@ export default function Sample() {
     const [guessArrayBefore, setGuessArrayBefore] = useState<string[]>([]);
     const [guessArrayAfter, setGuessArrayAfter] = useState<string[]>([]);
     const [gameStart, setGameStart] = useState(false);
+    const [messageAlert, setMessageAlert] = useState("");
     
 
     return (
@@ -40,7 +43,7 @@ export default function Sample() {
             console.log('submit', guess)
             setGameStart(true);
             if(guess.length != 5 || guessArrayBefore.includes(guess.toUpperCase()) || guessArrayAfter.includes(guess.toUpperCase()) || !wordArray.includes(guess.toUpperCase())) {
-                return
+                setMessageAlert("Invalid guess. Please enter a 5 letter word that has not been guessed before.");
             }
             else{
                 if(wordDictionary[new Date().toDateString()].localeCompare(guess.toUpperCase()) > 0) {
@@ -49,6 +52,8 @@ export default function Sample() {
                 } else if(wordDictionary[new Date().toDateString()].localeCompare(guess.toUpperCase()) < 0) {
                     setGuessArrayAfter([...guessArrayAfter, guess.toUpperCase()]);
                     guessArrayAfter.sort();
+                } else if(wordDictionary[new Date().toDateString()] === guess.toUpperCase()) {
+                    setMessageAlert("You guessed the word!");
                 }
                 setGuessNumber(guessNumber + 1);
             }
@@ -74,17 +79,13 @@ export default function Sample() {
                 setGuessArrayBefore([]);
                 setGuessArrayAfter([]);
             }}>Reset</button> : null}
+            {messageAlert ? <p>{messageAlert}</p> : null}
             {guessNumber === 5 ? <p>You are out of guesses! Hit reset to try again!</p> : null}
-            {wordDictionary[new Date().toDateString()] === guess.toUpperCase() && gameStart ? <div>
-                <h2>You guessed the word!</h2>
+            {messageAlert === "You guessed the word!" ? <div>
                 <p>
             Today's word is: {wordDictionary[new Date().toDateString()]}<br />
             More on Google: <a href={`https://www.google.com/search?q=${wordDictionary[new Date().toDateString()].toLowerCase()}+definition`}>{wordDictionary[new Date().toDateString()]}</a>
         </p></div> : null}
-            {/* {guess.length != 5 && gameStart ? <p>Your guess must be 5 letters long!</p> : null}
-            {guessArrayBefore.includes(guess.toUpperCase()) || guessArrayAfter.includes(guess.toUpperCase()) ? <p>You already guessed that word!</p> : null}
-            {wordArray.includes(guess.toUpperCase()) && gameStart ? null : <p>Your guess is not a word!</p>}
-             */}
         </form>
         </div>
     );
