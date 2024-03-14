@@ -34,10 +34,12 @@ export default function Sample() {
     
 
     return (
-        <div>
-        <h1>Word of the Day</h1>
-        <h2>Guess the Word!</h2>
-        <p>Number of guesses: {guessNumber}</p>
+        <div className="flex flex-col justify-center place-items-center">
+        <p className="text-4xl">{guessNumber === 1 ? '🤦' : 
+        guessNumber === 2 ? '🤦 🤦' :
+        guessNumber === 3 ? '🤦 🤦 🤦' :
+        guessNumber === 4 ? '🤦 🤦 🤦 🤦' : 
+        guessNumber === 5 ? '🤦 🤦 🤦 🤦 🤦' : ' '}</p>
         <form onSubmit={(event)=>{
             event.preventDefault();
             console.log('submit', guess)
@@ -65,32 +67,34 @@ export default function Sample() {
             console.log(guessArrayBefore)
             //setTimeout(() => {setGameStart(false)}, 3000)
         }}>
+            <div className="flex flex-col justify-center place-items-center">
             <p>Guesses before the word:</p>
-            <ul>
+            <ul className="text-4xl">
                 {guessArrayBefore.map((guess, index) => <li key={index}>{guess}</li>)}
             </ul>
-            <label htmlFor="guess">Enter your guess:</label><br />
-            <input type="text" id="guess" name="guess" maxLength={5} value={guess} onChange={(event)=>{
+            <input className="text-black text-5xl w-1/4" type="text" id="guess" name="guess" maxLength={5} value={guess} onChange={(event)=>{
                 setGuess(event.target.value);
             }}/>
             <p>Guesses after the word:</p>
-            <ul>
-                {guessArrayAfter.map((guess, index) => <li key={index}>{guess}</li>)}
+            <ul className="text-4xl">
+                {guessArrayAfter.map((guess, index) => <li className="list-none" key={index}>{guess}</li>)}
             </ul>
+            
             <br />
-            {guessNumber < 5 ? <button type="submit">Submit</button> : null}
-            {guessNumber === 5 ? <button type="reset" onClick={()=>{
+            {guessNumber < 5 ? <button type="submit" className="bg-blue-400 rounded-md p-2 shadow-2xl">Submit</button> : null}
+            {guessNumber === 5 ? <button type="reset" className="bg-red-400 rounded-md p-2 shadow-2xl" onClick={()=>{
                 setGuessNumber(0);
                 setGuessArrayBefore([]);
                 setGuessArrayAfter([]);
             }}>Reset</button> : null}
             {messageAlert ? <p>{messageAlert}</p> : null}
             {guessNumber === 5 ? <p>You are out of guesses! Hit reset to try again!</p> : null}
-            {messageAlert === "You guessed the word!" ? <div>
+            {messageAlert === "You guessed the word!" ? <div className="text-center">
                 <p>
             Today's word is: {wordDictionary[new Date().toDateString()]}<br />
-            More on Google: <a href={`https://www.google.com/search?q=${wordDictionary[new Date().toDateString()].toLowerCase()}+definition`}>{wordDictionary[new Date().toDateString()]}</a>
+            Find out more on Google: <a className="text-orange-500 underline decoration-4" href={`https://www.google.com/search?q=${wordDictionary[new Date().toDateString()].toLowerCase()}+definition`}>{wordDictionary[new Date().toDateString()]}</a>
         </p></div> : null}
+        </div>
         </form>
         </div>
     );

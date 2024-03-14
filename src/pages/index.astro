@@ -6,7 +6,11 @@ import Sample from '../components/sample'
 
 <Layout title="Word of the Day!">
 	<main>
-		<Sample client:load/>
+		<div class="flex flex-col justify-center place-items-center">
+			<h1>Word of the Day</h1>
+        	<h2>Using the alphabetical order of your guesses, see if you can determine the missing word in 5 guesses of less!</h2>
+			<Sample client:load/>
+		</div>
 	</main>
 </Layout>
 
