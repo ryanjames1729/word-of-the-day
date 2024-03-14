@@ -33,7 +33,6 @@ export default function Sample() {
     return (
         <div>
         <h1>Word of the Day</h1>
-        
         <h2>Guess the Word!</h2>
         <p>Number of guesses: {guessNumber}</p>
         <form onSubmit={(event)=>{
