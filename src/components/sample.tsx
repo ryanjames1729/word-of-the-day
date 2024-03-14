@@ -72,7 +72,7 @@ export default function Sample() {
             <ul className="text-4xl">
                 {guessArrayBefore.map((guess, index) => <li key={index}>{guess}</li>)}
             </ul>
-            <input className="text-black text-5xl w-1/4" type="text" id="guess" name="guess" maxLength={5} value={guess} onChange={(event)=>{
+            <input className="text-black text-5xl w-1/3 lg:w-1/4" type="text" id="guess" name="guess" maxLength={5} value={guess} onChange={(event)=>{
                 setGuess(event.target.value);
             }}/>
             <p>Guesses after the word:</p>
