@@ -47,17 +47,22 @@ export default function Sample() {
             }
             else{
                 if(wordDictionary[new Date().toDateString()].localeCompare(guess.toUpperCase()) > 0) {
-                    setGuessArrayBefore([...guessArrayBefore, guess.toUpperCase()]);
+                    guessArrayBefore.push(guess.toUpperCase());
                     guessArrayBefore.sort();
+                    // setGuessArrayBefore([...guessArrayBefore.sort(), guess.toUpperCase()]);
+                    setGuessArrayBefore(guessArrayBefore.sort())
                 } else if(wordDictionary[new Date().toDateString()].localeCompare(guess.toUpperCase()) < 0) {
-                    setGuessArrayAfter([...guessArrayAfter, guess.toUpperCase()]);
+                    guessArrayAfter.push(guess.toUpperCase());
                     guessArrayAfter.sort();
+                    //setGuessArrayAfter([...guessArrayAfter, guess.toUpperCase()]);
+                    setGuessArrayAfter(guessArrayAfter.sort());
                 } else if(wordDictionary[new Date().toDateString()] === guess.toUpperCase()) {
                     setMessageAlert("You guessed the word!");
                 }
                 setGuessNumber(guessNumber + 1);
-            }
+            }   
             setGuess("");
+            console.log(guessArrayBefore)
             //setTimeout(() => {setGameStart(false)}, 3000)
         }}>
             <p>Guesses before the word:</p>
