@@ -34,7 +34,7 @@ export default function Sample() {
     
 
     return (
-        <div className="flex flex-col justify-center place-items-center">
+        <div className="flex flex-col justify-center place-items-center bg-[#8AA8A1] rounded-lg lg:py-4 py-2 shadow-lg shadow-orange-500">
         <p className="text-4xl">{guessNumber === 1 ? '🤦' : 
         guessNumber === 2 ? '🤦 🤦' :
         guessNumber === 3 ? '🤦 🤦 🤦' :
