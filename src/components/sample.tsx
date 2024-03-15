@@ -70,14 +70,14 @@ export default function Sample() {
             <div className="flex flex-col justify-center place-items-center">
             <p>Guesses before the word:</p>
             <ul className="text-4xl">
-                {guessArrayBefore.map((guess, index) => <li key={index}>{guess}</li>)}
+                {guessArrayBefore.map((guess, index) => <li className="list-none font-mono" key={index}>{guess}</li>)}
             </ul>
-            <input className="text-black text-5xl w-1/3 lg:w-1/4" type="text" id="guess" name="guess" maxLength={5} value={guess} onChange={(event)=>{
+            <input className="text-black text-5xl w-1/3 lg:w-1/4 font-mono" type="text" id="guess" name="guess" maxLength={5} value={guess} onChange={(event)=>{
                 setGuess(event.target.value);
             }}/>
             <p>Guesses after the word:</p>
             <ul className="text-4xl">
-                {guessArrayAfter.map((guess, index) => <li className="list-none" key={index}>{guess}</li>)}
+                {guessArrayAfter.map((guess, index) => <li className="list-none font-mono" key={index}>{guess}</li>)}
             </ul>
             
             <br />
