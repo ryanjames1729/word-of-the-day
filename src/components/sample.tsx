@@ -72,7 +72,7 @@ export default function Sample() {
             <ul className="text-4xl">
                 {guessArrayBefore.map((guess, index) => <li className="list-none font-mono" key={index}>{guess}</li>)}
             </ul>
-            <input className="text-black text-5xl w-1/3 lg:w-1/4 font-mono" type="text" id="guess" name="guess" maxLength={5} value={guess} onChange={(event)=>{
+            <input className="text-black text-5xl w-1/3 lg:w-1/4 font-mono uppercase" type="text" id="guess" name="guess" maxLength={5} value={guess} onChange={(event)=>{
                 setGuess(event.target.value);
             }}/>
             <p>Guesses after the word:</p>
@@ -81,7 +81,7 @@ export default function Sample() {
             </ul>
             
             <br />
-            {guessNumber < 5 ? <button type="submit" className="bg-blue-400 rounded-md p-2 shadow-2xl">Submit</button> : null}
+            {guessNumber < 5 ? <button type="submit" className="bg-blue-400 rounded-md p-2[[]]]]]]]]]]]]][][] shadow-2xl">Submit</button> : null}
             {guessNumber === 5 ? <button type="reset" className="bg-red-400 rounded-md p-2 shadow-2xl" onClick={()=>{
                 setGuessNumber(0);
                 setGuessArrayBefore([]);
