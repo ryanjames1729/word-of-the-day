@@ -31,11 +31,14 @@ export default function Sample() {
     const [guessArrayAfter, setGuessArrayAfter] = useState<string[]>([]);
     const [gameStart, setGameStart] = useState(false);
     const [messageAlert, setMessageAlert] = useState("");
+    const [round, setRound] = useState(1);
     
 
     return (
         <div className="flex flex-col justify-center place-items-center bg-[#8AA8A1] rounded-lg lg:py-4 py-2 shadow-lg shadow-orange-500">
-        <p className="text-4xl">{guessNumber === 1 ? '🤦' : 
+        <p className="text-4xl">
+            Round #{round}<br />
+            {guessNumber === 1 ? '🤦' : 
         guessNumber === 2 ? '🤦 🤦' :
         guessNumber === 3 ? '🤦 🤦 🤦' :
         guessNumber === 4 ? '🤦 🤦 🤦 🤦' : 
@@ -70,22 +73,23 @@ export default function Sample() {
             <div className="flex flex-col justify-center place-items-center">
             <p>Guesses before the word:</p>
             <ul className="text-4xl">
-                {guessArrayBefore.map((guess, index) => <li className="list-none font-mono" key={index}>{guess}</li>)}
+            {guessArrayBefore.map((guess, index) => <li className="list-none font-mono mb-2" key={index}>{guess.split("").map((char, i) => <span key={i} className="border-black border-2 px-1 mx-0.5 border-solid rounded-sm bg-orange-200">{char}</span>)}</li>)}
             </ul>
             <input className="text-black text-5xl w-1/3 lg:w-1/4 font-mono uppercase" type="text" id="guess" name="guess" maxLength={5} value={guess} onChange={(event)=>{
                 setGuess(event.target.value);
             }}/>
             <p>Guesses after the word:</p>
             <ul className="text-4xl">
-                {guessArrayAfter.map((guess, index) => <li className="list-none font-mono" key={index}>{guess}</li>)}
+                {guessArrayAfter.map((guess, index) => <li className="list-none font-mono mb-2" key={index}>{guess.split("").map((char, i) => <span key={i} className="border-black border-2 px-1 mx-0.5 border-solid rounded-sm bg-orange-200">{char}</span>)}</li>)}
             </ul>
             
             <br />
-            {guessNumber < 5 ? <button type="submit" className="bg-blue-400 rounded-md p-2[[]]]]]]]]]]]]][][] shadow-2xl">Submit</button> : null}
-            {guessNumber === 5 ? <button type="reset" className="bg-red-400 rounded-md p-2 shadow-2xl" onClick={()=>{
+            {guessNumber < 5 ? <button type="submit" className="bg-blue-400 hover:bg-blue-500 hover:text-bold rounded-md p-2 shadow-2xl border-black border-2 border-solid">Submit</button> : null}
+            {guessNumber === 5 ? <button type="reset" className="bg-red-400 hover:bg-red-500 hover:text-bold rounded-md p-2 shadow-2xl border-black border-2 border-solid" onClick={()=>{
                 setGuessNumber(0);
                 setGuessArrayBefore([]);
                 setGuessArrayAfter([]);
+                setRound(round + 1);
             }}>Reset</button> : null}
             {messageAlert ? <p>{messageAlert}</p> : null}
             {guessNumber === 5 ? <p>You are out of guesses! Hit reset to try again!</p> : null}
