@@ -8,9 +8,9 @@ import Header from "../components/Header.astro";
 
 <Layout title="Word of the Day!">
 	<Header />
-	<main class="h-screen">
+	<main class="min-h-screen">
 		<div class="flex flex-col justify-center place-items-center">
-        	<h2 class="py-4">Using the alphabetical order of your guesses, see if you can determine the missing word in 5 guesses of less!</h2>
+        	<h2 class="mt-2 pb-4 px-1">Using the alphabetical order of your guesses, see if you can determine the missing word in 5 guesses of less!</h2>
 			<Sample client:load/>
 		</div>
 	</main>

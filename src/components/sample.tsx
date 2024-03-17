@@ -1,8 +1,6 @@
 import type { isRenderInstruction } from "astro/runtime/server/render/instruction.js";
 import wordList from "./wordList"
-import { useState } from "react";
-
-
+import { useState, useEffect } from "react";
 
 export default function Sample() {
     const words = wordList();
@@ -27,8 +25,8 @@ export default function Sample() {
 
     const [guessNumber, setGuessNumber] = useState(0);
     const [guess, setGuess] = useState("");
-    const [guessArrayBefore, setGuessArrayBefore] = useState<string[]>([]);
-    const [guessArrayAfter, setGuessArrayAfter] = useState<string[]>([]);
+    const [guessArrayBefore, setGuessArrayBefore] = useState<string[]>(["?????", "?????", "?????"]);
+    const [guessArrayAfter, setGuessArrayAfter] = useState<string[]>(["[[[[[", "[[[[[", "[[[[["]);
     const [gameStart, setGameStart] = useState(false);
     const [messageAlert, setMessageAlert] = useState("");
     const [round, setRound] = useState(1);
@@ -36,7 +34,7 @@ export default function Sample() {
    
 
     return (
-        <div className="flex flex-col justify-center place-items-center bg-[#8AA8A1] rounded-lg lg:py-4 py-2 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#f97316,0_0_15px_#f97316,0_0_30px_#f97316]">
+        <div className="flex flex-col justify-center place-items-center lg:w-full w-5/6 max-h-screen bg-[#8AA8A1] rounded-lg lg:py-1 pb-1 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#f97316,0_0_15px_#f97316,0_0_30px_#f97316]">
         <p className="text-4xl">
             Round #{round}<br />
             {guessNumber === 1 ? '🤦' : 
@@ -49,16 +47,22 @@ export default function Sample() {
             console.log('submit', guess)
             setGameStart(true);
             if(guess.length != 5 || guessArrayBefore.includes(guess.toUpperCase()) || guessArrayAfter.includes(guess.toUpperCase()) || !wordArray.includes(guess.toUpperCase())) {
-                setMessageAlert("Invalid guess. Please enter a 5 letter word that has not been guessed before.");
+                setMessageAlert("Invalid guess. Please enter a 5 letter word that has not been guessed before.")
             }
             else{
                 if(wordDictionary[new Date().toDateString()].localeCompare(guess.toUpperCase()) > 0) {
+                    if(guessArrayBefore.indexOf("?????") > -1) {
+                        guessArrayBefore.splice(guessArrayBefore.indexOf("?????"), 1);
+                    }
                     guessArrayBefore.push(guess.toUpperCase());
                     guessArrayBefore.sort();
                     // setGuessArrayBefore([...guessArrayBefore.sort(), guess.toUpperCase()]);
                     setGuessArrayBefore(guessArrayBefore.sort())
                     setGuessNumber(guessNumber + 1);
                 } else if(wordDictionary[new Date().toDateString()].localeCompare(guess.toUpperCase()) < 0) {
+                    if(guessArrayAfter.indexOf("[[[[[") > -1) {
+                        guessArrayAfter.splice(guessArrayBefore.indexOf("[[[[["), 1);
+                    }
                     guessArrayAfter.push(guess.toUpperCase());
                     guessArrayAfter.sort();
                     //setGuessArrayAfter([...guessArrayAfter, guess.toUpperCase()]);
@@ -77,15 +81,18 @@ export default function Sample() {
             <ul className="text-4xl">
             {guessArrayBefore.map((guess, index) => <li className="list-none font-mono mb-2" key={index}>{guess.split("").map((char, i) => 
             solutionArray[i] === char ? <span key={i} className="border-black border-2 px-1 mx-0.5 border-solid rounded-sm text-green-900 bg-orange-200 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_3px_#86efac,0_0_10px_#86efac,0_0_20px_#86efac]">{char}</span> :
+            char === "?" ? <div className="h-2"></div> :   
             <span key={i} className="border-black border-2 px-1 mx-0.5 border-solid rounded-sm bg-orange-200">{char}</span>)}</li>)}
             </ul>
             <input className="text-black text-5xl w-1/2 text-center lg:w-1/4 font-mono uppercase" type="text" id="guess" name="guess" maxLength={5} value={guess} onChange={(event)=>{
                 setGuess(event.target.value);
+                setMessageAlert("");
             }}/>
             <p>Guesses after the word:</p>
             <ul className="text-4xl">
             {guessArrayAfter.map((guess, index) => <li className="list-none font-mono mb-2" key={index}>{guess.split("").map((char, i) => 
-            solutionArray[i] === char ? <span key={i} className="border-black border-2 px-1 mx-0.5 border-solid rounded-sm bg-orange-200 text-green-900 bg-orange-200 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_3px_#86efac,0_0_10px_#86efac,0_0_20px_#86efac]">{char}</span> :
+            solutionArray[i] === char ? <span key={i} className="border-black border-2 px-1 mx-0.5 border-solid rounded-sm text-green-900 bg-orange-200 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_3px_#86efac,0_0_10px_#86efac,0_0_20px_#86efac]">{char}</span> :
+            char === "[" ? <div className="h-2"></div> :   
             <span key={i} className="border-black border-2 px-1 mx-0.5 border-solid rounded-sm bg-orange-200">{char}</span>)}</li>)}
             </ul>
             
@@ -97,9 +104,9 @@ export default function Sample() {
                 setGuessArrayAfter([]);
                 setRound(round + 1);
             }}>Reset</button> : null}
-            {messageAlert ? <p>{messageAlert}</p> : null}
-            {guessNumber === 5 ? <p>You are out of guesses! Hit reset to try again!</p> : null}
-            {messageAlert === "You guessed the word!" ? <div className="text-center">
+            {messageAlert ? <p className="p-3">{messageAlert}</p> : null}
+            {guessNumber === 5 ? <p className="p-3">You are out of guesses! Hit reset to try again!</p> : null}
+            {messageAlert === "You guessed the word!" ? <div className="p-2 text-center">
                 <p>
             Today's word is: {wordDictionary[new Date().toDateString()]}<br />
             Find out more on Google: <a className="text-orange-500 underline decoration-4" href={`https://www.google.com/search?q=${wordDictionary[new Date().toDateString()].toLowerCase()}+definition`}>{wordDictionary[new Date().toDateString()]}</a>
