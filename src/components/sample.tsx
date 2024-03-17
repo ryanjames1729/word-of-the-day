@@ -100,8 +100,8 @@ export default function Sample() {
             {guessNumber < 5 ? <button type="submit" className="bg-blue-400 hover:bg-blue-500 hover:text-bold rounded-md p-2 shadow-2xl shadow-inner border-black border-2 border-solid">Submit</button> : null}
             {guessNumber === 5 ? <button type="reset" className="bg-red-400 hover:bg-red-500 hover:text-bold rounded-md p-2 shadow-2xl border-black border-2 border-solid" onClick={()=>{
                 setGuessNumber(0);
-                setGuessArrayBefore([]);
-                setGuessArrayAfter([]);
+                setGuessArrayBefore(["?????", "?????", "?????"]);
+                setGuessArrayAfter(["[[[[[", "[[[[[", "[[[[["]);
                 setRound(round + 1);
             }}>Reset</button> : null}
             {messageAlert ? <p className="p-3">{messageAlert}</p> : null}
