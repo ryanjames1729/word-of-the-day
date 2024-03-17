@@ -7,10 +7,13 @@ import Header from "../components/Header.astro";
 ---
 
 <Layout title="Word of the Day!">
+	<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QVLD8C3H79"></script>
+
+</script>
 	<Header />
 	<main class="min-h-screen">
 		<div class="flex flex-col justify-center place-items-center">
-        	<h2 class="mt-2 pb-4 px-1">Using the alphabetical order of your guesses, see if you can determine the missing word in 5 guesses of less!</h2>
 			<Sample client:load/>
 		</div>
 	</main>
