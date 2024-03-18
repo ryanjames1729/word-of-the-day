@@ -46,6 +46,9 @@ export default function Sample() {
             <br /><br />
             Use the words before and after to narrow down where the correct word is alphabetically. Letters will turn green when they are correct letters in the solution.
             </p>
+            <img src="/sample_game.png" alt="Sample Game" className="w-1/4" />
+            <p className="p-5">In this example, the solution is alphabetically between DEATH and ROUND and includes the letters OU and H.</p>
+
             <button className="bg-blue-400 hover:bg-blue-500 hover:text-bold rounded-md p-2 shadow-2xl shadow-inner border-black border-2 border-solid" onClick={()=>{
                 setWelcomeMsg(false);
                 document.cookie = "introduction=true; max-age=1209600; path=/";
@@ -132,6 +135,7 @@ export default function Sample() {
         <button className="pt-8 decoration-6 underline text-red-700 hover:text-slate-800" onClick={()=>{
             document.cookie = 'introduction=; Max-Age=0; path=/;'
             setWelcomeMsg(true);
+            location.reload();
         }}>Help Me Please</button>
         </div>
     );
