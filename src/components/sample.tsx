@@ -2,7 +2,12 @@ import type { isRenderInstruction } from "astro/runtime/server/render/instructio
 import wordList from "./wordList"
 import { useState, useEffect } from "react";
 
+import useWindowSize from 'react-use/lib/useWindowSize'
+import Confetti from 'react-confetti'
+
 export default function Sample() {
+    const { width, height } = useWindowSize()
+
     const words = wordList();
     let scrabbleWords = words.split(" ").filter(word => word.length === 5).join("\n");
     // remove words that dont have letters
@@ -124,13 +129,36 @@ export default function Sample() {
                 setGuessArrayAfter(["[[[[[", "[[[[[", "[[[[["]);
                 setRound(round + 1);
             }}>Reset</button> : null}
-            {messageAlert ? <p className="p-3">{messageAlert}</p> : null}
+            {/* {messageAlert ? <p className="p-3">{messageAlert}</p> : null} */}
             {guessNumber === 5 ? <p className="p-3">You are out of guesses! Hit reset to try again!</p> : null}
-            {messageAlert === "You guessed the word!" ? <div className="p-2 text-center">
+            {/* {messageAlert === "You guessed the word!" ? <div className="p-2 text-center">
                 <p>
             Today's word is: {wordDictionary[new Date().toDateString()]}<br />
             Find out more on Google: <a className="text-orange-500 underline decoration-4" href={`https://www.google.com/search?q=${wordDictionary[new Date().toDateString()].toLowerCase()}+definition`}>{wordDictionary[new Date().toDateString()]}</a>
-        </p></div> : null}
+        </p></div> : null} */}
+
+        {messageAlert === "You guessed the word!" ? <div className="flex flex-col justify-center place-items-center p-2 min-h-48 lg:w-1/2 -mt-10 absolute z-10 mx-1 lg:mx-0 bg-slate-500 text-white rounded-md border-solid border-slate-700">
+        <Confetti
+      width={width/2}
+      height={height}
+    />
+            <h2 className="text-bold text-3xl">Congratulations!</h2>
+            <p className="p-5">
+            Today's word is: {wordDictionary[new Date().toDateString()]}<br />
+            Find out more on Google: <a className="text-orange-500 underline decoration-4" href={`https://www.google.com/search?q=${wordDictionary[new Date().toDateString()].toLowerCase()}+definition`}>{wordDictionary[new Date().toDateString()]}</a>
+            </p>
+            <button className="bg-blue-400 hover:bg-blue-500 hover:text-bold rounded-md p-2 shadow-2xl shadow-inner border-black border-2 border-solid" onClick={()=>{
+                setMessageAlert("");
+            }}>Close</button>
+            </div> : null }
+        {messageAlert && messageAlert != "You guessed the word!" ? <div className="flex flex-col justify-center place-items-center p-2 lg:w-1/2 min-h-48 -mt-10 absolute z-10 mx-1 lg:mx-0 bg-slate-500 text-white rounded-md border-solid border-slate-700">
+                <p>{messageAlert}</p>
+                <button className="bg-blue-400 hover:bg-blue-500 hover:text-bold rounded-md p-2 shadow-2xl shadow-inner border-black border-2 border-solid" onClick={()=>{
+                setMessageAlert("");
+            }}>Close</button>
+                </div>: null
+        }    
+
         </div>
         </form>
         <button className="pt-8 decoration-6 underline text-red-700 hover:text-slate-800" onClick={()=>{
