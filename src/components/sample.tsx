@@ -41,7 +41,7 @@ export default function Sample() {
 
     return (
         <div className="flex flex-col justify-center place-items-center lg:w-full w-5/6 max-h-screen bg-[#8AA8A1] rounded-lg lg:py-1 pb-1 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#f97316,0_0_15px_#f97316,0_0_30px_#f97316]">
-        {welcomeMsg && !cookie ? <div className="flex flex-col justify-center place-items-center p-2 lg:w-1/2 -mt-10 absolute z-10 bg-slate-500 text-white rounded-md border-solid border-slate-700">
+        {welcomeMsg && !cookie ? <div className="flex flex-col justify-center place-items-center p-2 lg:w-1/2 -mt-10 absolute z-10 mx-1 lg:mx-0 bg-slate-500 text-white rounded-md border-solid border-slate-700">
             <h2 className="underline text-bold decoration-6 text-3xl">How to Play</h2>
             <p className="p-5">Using the alphabetical order of your guesses, see if you can determine the missing word in 5 guesses of less!
             <br /><br />
