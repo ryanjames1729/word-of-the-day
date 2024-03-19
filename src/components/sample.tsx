@@ -138,10 +138,8 @@ export default function Sample() {
         </p></div> : null} */}
 
         {messageAlert === "You guessed the word!" ? <div className="flex flex-col justify-center place-items-center p-2 min-h-48 lg:w-1/2 -mt-10 absolute z-10 mx-1 lg:mx-0 bg-slate-500 text-white rounded-md border-solid border-slate-700">
-        <Confetti
-      width={width/2}
-      height={height}
-    />
+        {width > 460 ? <Confetti width={width*0.5} height={height*0.7} /> : <Confetti width={width*0.8} height={height*0.8} />}
+        
             <h2 className="text-bold text-3xl">Congratulations!</h2>
             <p className="p-5">
             Today's word is: {wordDictionary[new Date().toDateString()]}<br />
