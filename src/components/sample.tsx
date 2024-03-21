@@ -71,8 +71,14 @@ export default function Sample() {
             event.preventDefault();
             console.log('submit', guess)
             setGameStart(true);
-            if(guess.length != 5 || guessArrayBefore.includes(guess.toUpperCase()) || guessArrayAfter.includes(guess.toUpperCase()) || !wordArray.includes(guess.toUpperCase())) {
+            if(guessArrayBefore.includes(guess.toUpperCase()) || guessArrayAfter.includes(guess.toUpperCase())) {
                 setMessageAlert("Invalid guess. Please enter a 5 letter word that has not been guessed before.")
+            }
+            else if(guess.length != 5) {
+                setMessageAlert("Invalid guess. Please enter a 5 letter word.")
+            }
+            else if(!wordArray.includes(guess.toUpperCase())){
+                setMessageAlert("Invalid guess. Please enter a word that exists in the Scrabble dictionary.")
             }
             else{
                 if(wordDictionary[new Date().toDateString()].localeCompare(guess.toUpperCase()) > 0) {
