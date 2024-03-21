@@ -1,4 +1,4 @@
-import type { isRenderInstruction } from "astro/runtime/server/render/instruction.js";
+
 import wordList from "./wordList"
 import { useState, useEffect, useRef } from "react";
 
@@ -74,6 +74,7 @@ export default function Sample() {
         guessNumber === 5 ? '🤦 🤦 🤦 🤦 🤦' : ' '}</p>
         <form onSubmit={(event)=>{
             event.preventDefault();
+            event.currentTarget.reset();
             if(guessArrayBefore.includes(guess.toUpperCase()) || guessArrayAfter.includes(guess.toUpperCase())) {
                 setMessageAlert("Invalid guess. Please enter a 5 letter word that has not been guessed before.")
             }
@@ -116,8 +117,8 @@ export default function Sample() {
             char === "?" ? <div className="h-2"></div> :   
             <span key={i} className="border-black border-2 px-1 mx-0.5 border-solid rounded-sm bg-orange-200">{char}</span>)}</li>)}
             </ul>
-            <input className="text-black text-5xl w-1/2 text-center lg:w-1/4 font-mono uppercase" type="text" id="guess" name="guess" maxLength={5} value={guess} onChange={(event)=>{
-                setGuess(event.target.value);
+            <input className="text-black text-5xl w-1/2 text-center lg:w-1/4 font-mono uppercase" type="text" id="guess" name="guess" maxLength={5} onChange={(e)=>{
+                e.target.value.length === 5 ? setGuess(e.target.value) : null;
                 //setMessageAlert("");
             }}/>
             <p>Guesses after the word:</p>
