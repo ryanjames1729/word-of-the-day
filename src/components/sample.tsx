@@ -1,5 +1,6 @@
 
 import wordList from "./wordList"
+import wordListTwo from "./wordList-version2"
 import { useState, useEffect, useRef } from "react";
 
 import useWindowSize from 'react-use/lib/useWindowSize'
@@ -28,7 +29,8 @@ function createWordDictionary(arr: string[]) {
 export default function Sample() {
     const { width, height } = useWindowSize()
 
-    const [wordArray, setWordArray] = useState<string[]>(createWordArray());
+    //const [wordArray, setWordArray] = useState<string[]>(createWordArray());
+    const [wordArray, setWordArray] = useState(wordListTwo())
     const [wordDictionary, setWordDictionary] = useState<{ [key: string]: string}>(createWordDictionary(wordArray));
     
     useEffect(() => {
