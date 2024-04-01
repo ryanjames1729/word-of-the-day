@@ -104,7 +104,49 @@ export default function Sample() {
                     setGuessArrayAfter(guessArrayAfter.sort());
                     setGuessNumber(guessNumber + 1);
                 } else if(solution === guess.toUpperCase()) {
-                    setMessageAlert("You guessed the word!");
+                    
+                    // check if cookie 'solved_puzzle' exists
+                    if(document.cookie.indexOf("solved_puzzle") === -1) {
+                        //document.cookie = `solved_puzzle=${new Date(new Date().setDate(new Date().getDate() - 1)).toDateString()}; max-age=1209600; path=/`;
+                        document.cookie = `solved_puzzle=${new Date().toDateString()}; max-age=1209600; path=/`;
+                        setMessageAlert("You guessed the word!");
+                    }
+                    else if (document.cookie.split("solved_puzzle=")[1].split(",").indexOf(new Date().toDateString()) === -1){
+                        document.cookie = `solved_puzzle=${document.cookie.split("solved_puzzle=")[1] + "," + new Date().toDateString()}; max-age=1209600; path=/`;
+                    }
+                    else {
+                        setMessageAlert("You guessed the word!");
+                    }
+
+
+
+                    // read the 'solved_puzzle' cookie and determine if consecutive days have been solved
+                    let solvedPuzzle = document.cookie.split("solved_puzzle=")[1].split(",");
+                    let solvedPuzzleDates = solvedPuzzle.map(date => new Date(date));
+                    // remove all dates that are duplicates
+                    solvedPuzzleDates = solvedPuzzleDates.filter((date, index) => solvedPuzzleDates.indexOf(date) === index);
+                    let solvedPuzzleConsecutive = true;
+                    for(let i = 1; i < solvedPuzzleDates.length; i++) {
+                        console.log(solvedPuzzleDates[i], solvedPuzzleDates[i-1]);
+                        console.log(solvedPuzzleDates[i].getDay() - solvedPuzzleDates[i-1].getDay());
+                        if(solvedPuzzleDates[i].getDay() - solvedPuzzleDates[i-1].getDay() !== 1) {
+                            solvedPuzzleConsecutive = false;
+                            // set solved_puzzle cookie to expire
+                            document.cookie = 'solved_puzzle=; Max-Age=0; path=/;';
+                            setMessageAlert("You guessed the word!");
+                        }
+                    }
+                    if(solvedPuzzleConsecutive) {
+                        let solveCount = 1;
+                        for(let i = 1; i < solvedPuzzleDates.length; i++) {
+                            if(solvedPuzzleDates[i].getDay() - solvedPuzzleDates[i-1].getDay() === 1) {
+                                solveCount++;
+                            }
+                        }
+                        if(solveCount > 1){
+                            setMessageAlert(`You guessed the word! You're on a streak! You have solved ${solveCount} consecutive puzzles!`);
+                        }
+                    }
                 }
             }   
             setGuess("");
@@ -142,10 +184,11 @@ export default function Sample() {
             {/* {messageAlert ? <p className="p-3">{messageAlert}</p> : null} */}
             {guessNumber === 5 ? <p className="p-3">You are out of guesses! Hit reset to try again!</p> : null}
 
-        {messageAlert === "You guessed the word!" ? <div className="flex flex-col justify-center place-items-center p-2 min-h-48 lg:w-1/2 -mt-10 absolute z-10 mx-1 lg:mx-0 bg-slate-500 text-white rounded-md border-solid border-slate-700">
+        {messageAlert.indexOf("You guessed the word!") > -1 ? <div className="flex flex-col justify-center place-items-center p-2 min-h-48 lg:w-1/2 -mt-10 absolute z-10 mx-1 lg:mx-0 bg-slate-500 text-white rounded-md border-solid border-slate-700">
         {width > 460 ? <Confetti width={width*0.5} height={height*0.7} /> : <Confetti width={width*0.8} height={height*0.8} />}
         
             <h2 className="text-bold text-3xl">Congratulations!</h2>
+            <h3 className="text-bold text-xl">{messageAlert}</h3>
             <p className="p-5">
             Today's word is: {solution}<br />
             Find out more on Google: <a className="text-orange-500 underline decoration-4" href={`https://www.google.com/search?q=${solution.toLowerCase()}+definition`}>{solution}</a>
@@ -154,7 +197,7 @@ export default function Sample() {
                 setMessageAlert("");
             }}>Close</button>
             </div> : null }
-        {messageAlert && messageAlert != "You guessed the word!" ? <div className="flex flex-col justify-center place-items-center p-2 lg:w-1/2 min-h-48 -mt-10 absolute z-10 mx-1 lg:mx-0 bg-slate-500 text-white rounded-md border-solid border-slate-700">
+        {messageAlert && messageAlert.indexOf("You guessed the word!") == -1 ? <div className="flex flex-col justify-center place-items-center p-2 lg:w-1/2 min-h-48 -mt-10 absolute z-10 mx-1 lg:mx-0 bg-slate-500 text-white rounded-md border-solid border-slate-700">
                 <p>{messageAlert}</p>
                 <button className="bg-blue-400 hover:bg-blue-500 hover:text-bold rounded-md p-2 shadow-2xl shadow-inner border-black border-2 border-solid" onClick={()=>{
                 setMessageAlert("");
