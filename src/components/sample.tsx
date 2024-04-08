@@ -157,7 +157,7 @@ export default function Sample() {
             <p>Guesses before the word:</p>
             <ul className="text-4xl">
             {guessArrayBefore.map((guess, index) => <li className="list-none font-mono mb-2" key={index}>{guess.split("").map((char, i) => 
-            solutionArray[i] === char ? <span key={i} className="border-black border-2 px-1 mx-0.5 border-solid rounded-sm text-green-900 bg-orange-200 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_3px_#86efac,0_0_10px_#86efac,0_0_20px_#86efac]">{char}</span> :
+            solutionArray[i] === char ? <span key={i} className="border-green-800 border-2 px-1 mx-0.5 border-solid rounded-sm text-green-600 bg-orange-200 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_3px_#42E67E,0_0_10px_#42E67E,0_0_20px_#42E67E]">{char}</span> :
             char === "?" ? <div className="h-2"></div> :   
             <span key={i} className="border-black border-2 px-1 mx-0.5 border-solid rounded-sm bg-orange-200">{char}</span>)}</li>)}
             </ul>
@@ -168,7 +168,7 @@ export default function Sample() {
             <p>Guesses after the word:</p>
             <ul className="text-4xl">
             {guessArrayAfter.map((guess, index) => <li className="list-none font-mono mb-2" key={index}>{guess.split("").map((char, i) => 
-            solutionArray[i] === char ? <span key={i} className="border-black border-2 px-1 mx-0.5 border-solid rounded-sm text-green-900 bg-orange-200 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_3px_#86efac,0_0_10px_#86efac,0_0_20px_#86efac]">{char}</span> :
+            solutionArray[i] === char ? <span key={i} className="border-green-800 border-2 px-1 mx-0.5 border-solid rounded-sm text-green-600 bg-orange-200 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_3px_#42E67E,0_0_10px_#42E67E,0_0_20px_#42E67E]">{char}</span> :
             char === "[" ? <div className="h-2"></div> :   
             <span key={i} className="border-black border-2 px-1 mx-0.5 border-solid rounded-sm bg-orange-200">{char}</span>)}</li>)}
             </ul>
